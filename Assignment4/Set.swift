@@ -87,19 +87,23 @@ struct Set {
                     return
                 }
                 if cardsAreMatched() {
-                    if cards.count >= 3 {
-                        threeOnlySelectedCardsIndices.forEach {cardsOnScreen[$0] = cards.removeLast()}
-                        threeOnlySelectedCardsIndices = [chosenIndex]
-                    } else {
-                        let selectedCardId = cardsOnScreen[chosenIndex].id
-                        let card1 = cardsOnScreen[ threeOnlySelectedCardsIndices[0]]
-                        let card2 = cardsOnScreen[ threeOnlySelectedCardsIndices[1]]
-                        let card3 = cardsOnScreen[ threeOnlySelectedCardsIndices[2]]
-                        cardsOnScreen.removeAll { $0.id == card1.id || $0.id == card2.id || $0.id == card3.id}
-                        threeOnlySelectedCardsIndices = [
-                            cardsOnScreen.firstIndex(where: {$0.id == selectedCardId})!
-                        ]
+                    
+                    // saving the card id of the chosen index
+                    // Becuase the chosen will be changed after removing cards
+                    let selectedCardId: Int = cardsOnScreen[chosenIndex].id
+                    
+                    // For loops are saving the inital arrays
+                    // Thats why we have to update the index in each loop
+                    // To get the correct updated index
+                    threeOnlySelectedCardsIndices.forEach{ _ in
+                        if let index = threeOnlySelectedCardsIndices.first {
+                            cardsOnScreen.remove(at: index)
+                        }
                     }
+                    
+                    // the chosen index now is the selected card id index
+                    threeOnlySelectedCardsIndices = [cardsOnScreen.firstIndex(where:{ $0.id == selectedCardId})!]
+      
                 } else {
                     cardsOnScreen[chosenIndex].isSelected = true
                     threeOnlySelectedCardsIndices = [chosenIndex]
