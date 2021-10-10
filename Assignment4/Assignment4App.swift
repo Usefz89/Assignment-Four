@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct Assignment4App: App {
-    var game = SetGame()
+    var game = SetGameMode()
    
     var body: some Scene {
         
