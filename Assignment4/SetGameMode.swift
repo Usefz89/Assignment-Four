@@ -59,6 +59,10 @@ class SetGameMode: ObservableObject  {
             return Color.green
         }
     }
+    
+    func cardsAreMatched() -> Bool {
+        model.cardsAreMatched()
+    }
    
     
     //MARK: - INTENT:
@@ -69,10 +73,19 @@ class SetGameMode: ObservableObject  {
     func dealCards() {
         model.dealCards()
     }
+    func dealTheFirstCards() {
+        model.dealTheFirstCards()
+    }
+    
+    func discardCards() {
+        model.discardCards()
+    }
     
     func newGame() {
-        model =  Self.makeModel()
+        model = Self.makeModel()
     }
+   
+    
 }
 
 

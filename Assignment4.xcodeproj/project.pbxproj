@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CA082BDE271437BA00782205 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA082BDD271437BA00782205 /* CardView.swift */; };
 		CA2AB087270EDB57005C8937 /* Diamond.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA2AB086270EDB57005C8937 /* Diamond.swift */; };
 		CA2B07CA270B3616004E0AD3 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA2B07C9270B3616004E0AD3 /* Utilities.swift */; };
 		CA43815C27087DD40018D079 /* Assignment4App.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA43815B27087DD40018D079 /* Assignment4App.swift */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CA082BDD271437BA00782205 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = SOURCE_ROOT; };
 		CA2AB086270EDB57005C8937 /* Diamond.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Diamond.swift; sourceTree = "<group>"; };
 		CA2B07C9270B3616004E0AD3 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		CA43815827087DD40018D079 /* Assignment4.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Assignment4.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -66,6 +68,7 @@
 			children = (
 				CA43815B27087DD40018D079 /* Assignment4App.swift */,
 				CAF992342708D750001FB778 /* SetGameView.swift */,
+				CA082BDD271437BA00782205 /* CardView.swift */,
 				CA2B07C9270B3616004E0AD3 /* Utilities.swift */,
 				CA43816C270887110018D079 /* SetGame.swift */,
 				CAF9923627098AEC001FB778 /* Theme.swift */,
@@ -157,6 +160,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA43816D270887110018D079 /* SetGame.swift in Sources */,
+				CA082BDE271437BA00782205 /* CardView.swift in Sources */,
 				CA43816F2708896F0018D079 /* SetGameMode.swift in Sources */,
 				CA43815C27087DD40018D079 /* Assignment4App.swift in Sources */,
 				CAF9923727098AEC001FB778 /* Theme.swift in Sources */,

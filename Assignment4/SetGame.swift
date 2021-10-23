@@ -9,9 +9,11 @@ import Foundation
 
 struct SetGame {
     var cards: [Card]
-    var cardsOnScreen: [Card]
+    var cardsOnScreen: [Card] = [] 
     var discardedCards: [Card] = [] 
     var selectedCardsIndices: [Int] = []
+    
+    // Computed property for the selected cards indices
     var threeOnlySelectedCardsIndices: [Int] {
         get {cardsOnScreen.indices.filter{cardsOnScreen[$0].isSelected}}
         set {
@@ -19,6 +21,10 @@ struct SetGame {
                 cardsOnScreen[$0].isSelected = newValue.contains($0)
                 cardsOnScreen[$0].matchingStatus = .notChecked
             }
+            discardedCards.indices.forEach({
+                discardedCards[$0].isSelected = false
+                discardedCards[$0].matchingStatus = .notChecked
+            })
         }
     }
    
@@ -27,6 +33,8 @@ struct SetGame {
         var matchingStatus: MatchedStatus = .notChecked
         var cardContent: Theme
         var id: Int
+        
+        // Cards will be comparable based on the Card Content.
         static func ==(lhs: Self, rhs: Self) -> Bool {
             return lhs.cardContent == rhs.cardContent
         }
@@ -36,6 +44,9 @@ struct SetGame {
             case checkedMatched
         }
     }
+    
+    /// inisiate the Card Game by looping 81 times through the all shapes colors and shading.
+    /// Which the number 81 is all the possible unique shapes you can get by the options in Theme.
     
     init(createCardContent: () -> Theme) {
         var cardsCount = 0
@@ -48,14 +59,16 @@ struct SetGame {
                 cardsCount += 1
             }
         }
-        
-        cardsOnScreen = Array(cards.prefix(through: 11))
-        cards.removeSubrange(0..<12)
     }
+    
+    
+    /// Choose the card you tap on and the action will be based on the number of items in the property "threeAndOnlyIndices"
+    /// - Parameter card: of type Card which is the card you tap on.
     
     mutating func choose (_ card: Card) {
         guard let chosenIndex = cardsOnScreen.firstIndex(where: {$0.id == card.id}) else {return}
-        
+            
+            // Switch between the number of items in the var " threeAndOnlyCardIndices"
             switch threeOnlySelectedCardsIndices.count {
             case 0:
                 cardsOnScreen[chosenIndex].isSelected = true
@@ -114,6 +127,7 @@ struct SetGame {
             }
     }
     
+    /// Return the boolen value of which the three cards in the argument are matched or not
     func matchingCards(card1: Card, card2: Card, card3: Card) -> Bool {
         
             ((card1.cardContent.shape == card2.cardContent.shape &&
@@ -145,13 +159,47 @@ struct SetGame {
         ? true : false
     }
     
+    /// Return the boolen value if there are three matched cards.
     func cardsAreMatched() -> Bool {
         return cardsOnScreen.indices.filter({cardsOnScreen[$0].matchingStatus == .checkedMatched}).count >= 3
     }
     
+    /// Deal the first 12 cards at the beginning of the game.
+    mutating func dealTheFirstCards() {
+        while cardsOnScreen.count < 12 {
+            cardsOnScreen.append(cards.removeFirst())
+        }
+    }
+    
+    /// Deal three cards when you tap the deck.
+    ///
+    /// if there are already matched cards, it will  replace it with new three cards.
+    /// otherwise, add three cards to the collection of "cardsOnScreen".
+    ///
+    /// If ti's new game, start the game by dealing 12 cards if cardsOnScreen is equal to zero.
     mutating func dealCards() {
-            cardsAreMatched() ? threeOnlySelectedCardsIndices.forEach({cardsOnScreen[$0] = cards.removeLast()})
-                : cardsOnScreen.add(3, from: &cards)
+        if cardsOnScreen.count < 12 {
+            dealTheFirstCards()
+
+        } else {
+            if cardsAreMatched() {
+                threeOnlySelectedCardsIndices.forEach{
+                    discardedCards.append(cardsOnScreen[$0])
+                    cardsOnScreen[$0] = cards.removeFirst()
+                }
+                threeOnlySelectedCardsIndices = []
+            } else {
+                cardsOnScreen.add(3, from: &cards)
+            }
+        }
+    }
+    /// Remove the matched cards from the Body of the game to the Discarded cards deck
+    mutating func discardCards() {
+        if cardsAreMatched() {
+            threeOnlySelectedCardsIndices.forEach({
+                discardedCards.append(cardsOnScreen[$0])
+            })
+        }
     }
 }
 
